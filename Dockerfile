@@ -1,18 +1,10 @@
-FROM python:3.9
+FROM python:3.10-slim
 
-RUN useradd -m -u 1000 user
-USER user
-ENV HOME=/home/user \
-    PATH=/home/user/.local/bin:$PATH
+WORKDIR /app
 
-WORKDIR $HOME/app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=user . $HOME/app
-COPY --chown=user ./requirements.txt $HOME/app/requirements.txt
-
-RUN pip install --user --upgrade pip setuptools wheel
-RUN pip install --user --no-cache-dir -r requirements.txt
-
-COPY --chown=user . .
+COPY . .
 
 CMD ["chainlit", "run", "chainlit_app.py", "--host", "0.0.0.0", "--port", "7860"]
