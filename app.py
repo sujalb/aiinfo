@@ -1,4 +1,5 @@
 # Required Libraries
+from sentence_transformers import SentenceTransformer
 import fitz  # PyMuPDF
 import os
 from langchain_openai import OpenAIEmbeddings
@@ -7,9 +8,13 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient  # Import Qdrant client
 import uuid  # Add this import at the top of your file
 import json
+from huggingface_hub import login
+
 
 # Load environment variables from .env file
 load_dotenv()
+login(token=os.getenv("HF_TOKEN"))
+
 
 # Initialize Qdrant client
 qdrant_api_key = os.getenv("QDRANT_API_KEY")  # Get the Qdrant API key from environment variables
@@ -115,11 +120,18 @@ def chunk_text(text, themes):
     return thematic_chunks
 
 # Step 4: Embed the Chunks
-def embed_chunks(thematic_chunks):
+def embed_chunks_openai(thematic_chunks):
     openai_api_key = os.getenv("OPENAI_API_KEY")  # Get the API key from environment variables
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small",openai_api_key=openai_api_key)
     embedded_chunks = {theme: embeddings.embed_documents(chunks) for theme, chunks in thematic_chunks.items()}
     return embedded_chunks
+
+def embed_chunks_fine_tuned(thematic_chunks):
+    model = SentenceTransformer("svb01/fine-tuned-embedding-model")
+    embedded_chunks = {theme: model.encode(chunks) for theme, chunks in thematic_chunks.items()}
+    return embedded_chunks
+
+# The rest of app.py remains the same
 
 # Modified main execution block
 def main():
@@ -134,7 +146,7 @@ def main():
             pdf_path = os.path.join(resources_folder, filename)
             text = extract_text_from_pdf(pdf_path)
             thematic_chunks = chunk_text(text, themes)
-            embedded_chunks = embed_chunks(thematic_chunks)
+            embedded_chunks = embed_chunks_fine_tuned(thematic_chunks)
 
             # Ensure the collection exists
             if not new_docs_processed:
