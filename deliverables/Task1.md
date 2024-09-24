@@ -16,20 +16,17 @@ Hint: Create a list of potential questions that people are likely to ask!
 ✅ Deliverables:
 
 **1. Describe the default chunking strategy that you will use.**
-<div style="color: green;">   
+
 The default chunking strategy used is a combination of size-based splitting and thematic categorization. 
 This strategy uses RecursiveCharacterTextSplitter with a chunk size of 1000 characters and an overlap of 200 characters. It then categorizes these chunks based on predefined themes.
-</div>
 
 **2.  Articulate a chunking strategy that you would also like to test out.**
     
-<div style="color: green;">
-A pure size-based chunking strategy without thematic categorization. This would involve splitting the text into fixed-size chunks without attempting to categorize them based on themes.
-</div>
 
+A pure size-based chunking strategy without thematic categorization. This would involve splitting the text into fixed-size chunks without attempting to categorize them based on themes.
 
 **3. Describe how and why you made these decisions**
-<div style="color: green;">   
+
 The default strategy was chosen for its simplicity and efficiency:
 
 * Size-based splitting (1000 characters) ensures manageable chunk sizes for processing and embedding.
@@ -43,7 +40,7 @@ The alternative pure size-based strategy:
 * Is simpler to implement and doesn't rely on predefined themes.
 * May split semantic units, potentially affecting the coherence of individual chunks.'
 * Could be more comprehensive, including all parts of the document regardless of theme.
-</div>
+
 
 
 
