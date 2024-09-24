@@ -47,3 +47,5 @@ htmlcov/
 
 # Editor history
 .history/
+
+fine_tuned_embedding_model/
