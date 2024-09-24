@@ -11,4 +11,6 @@ Task 2: Build an end-to-end RAG application using an industry-standard open-sour
 
 1. Build a prototype and deploy to a Hugging Face Space, and create a short (< 2 min) loom video demonstrating some initial testing inputs and outputs.
 
+https://www.loom.com/share/a052024b532048c5bfdcd0f19303fd27
+
 2. How did you choose your stack, and why did you select each tool the way you did?
